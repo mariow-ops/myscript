@@ -1,0 +1,1 @@
+To the run the bash script in the terminal to scan the domain names in domain.txt do the command "./myscript.sh domain.txt"
