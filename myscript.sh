@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the Input file
-INFILE=/home/mario/Documents/myscript/IP.txt
+INFILE=/home/mario/Documents/myscript/domain.txt
 
 # Check if the input file exists
 if [ ! -f "$INFILE" ]; then
@@ -36,7 +36,7 @@ do
     echo "Scanning $domain for vulnerabilities...">>IP.txt
     output=$(docker run sslyze $domain)
     echo "$output">>IP.txt
-done < "/home/mariow/Documents/myscript/domain.txt"
+done < "/home/mario/Documents/myscript/domain.txt"
 
 
 # Read the file line by line
@@ -72,4 +72,4 @@ do
     echo -e '\n'
     sleep 5
     
-done < "/home/mariow/Documents/myscript/IP.txt"
+done < "/home/mario/Documents/myscript/IP.txt"
