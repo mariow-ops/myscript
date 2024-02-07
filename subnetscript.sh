@@ -37,3 +37,37 @@ do
     output=$(docker run sslyze $ip)
     echo "$output" >> subnet.txt
 done
+
+while IFS= read -r line
+do
+    counter=0
+    # Extract the ip address 
+
+    ip=$(echo "$line" | grep -oP '(?<=SCAN RESULTS FOR ).*')
+    if [ -z "$ip" ]; then
+        continue
+    fi
+
+    # Print the ip address
+    echo "IP Address: $ip"
+
+    # Extract the results for the specified tests
+    echo "Test Results:"
+    while true; do
+        grep -m 4 -A 1 'Deflate Compression\|OpenSSL CCS Injection\|OpenSSL Heartbleed\|ROBOT Attack' | tr -s ' '
+        #output=$(grep -m 1 'Deflate Compression')
+        #put=$(grep -A 1 'Deflate Compression'| tr '\n' ' ')
+        #echo "$output $put"
+        echo -e '\n'
+        grep -m 1 -A 2 'Session Renegotiation'
+        counter=$((counter+1))
+
+        # Check if the counter reaches one
+        if [ $counter -eq 1 ]; then
+            break
+        fi
+    done
+    echo -e '\n'
+    sleep 5
+    
+done < "/home/mario/Documents/myscript/subnet.txt"
