@@ -49,17 +49,17 @@ do
     fi
 
     # Print the ip address
-    echo "IP Address: $ip"
+    echo "IP Address: $ip" >> results.txt
 
     # Extract the results for the specified tests
-    echo "Test Results:"
+    echo "Test Results:" >> results.txt
     while true; do
-        grep -m 4 -A 1 'Deflate Compression\|OpenSSL CCS Injection\|OpenSSL Heartbleed\|ROBOT Attack' | tr -s ' '
+        grep -m 4 -A 1 'Deflate Compression\|OpenSSL CCS Injection\|OpenSSL Heartbleed\|ROBOT Attack' | tr -s ' ' >> results.txt
         #output=$(grep -m 1 'Deflate Compression')
         #put=$(grep -A 1 'Deflate Compression'| tr '\n' ' ')
         #echo "$output $put"
-        echo -e '\n'
-        grep -m 1 -A 2 'Session Renegotiation'
+        echo -e '\n' >> results.txt
+        grep -m 1 -A 2 'Session Renegotiation' | tr -s ' ' >> results.txt
         counter=$((counter+1))
 
         # Check if the counter reaches one
@@ -67,7 +67,10 @@ do
             break
         fi
     done
-    echo -e '\n'
+    echo -e '\n' >> results.txt
     sleep 5
     
 done < "/home/mario/Documents/myscript/subnet.txt"
+
+# Email the results.txt file
+mail -s "Results for sslyze subnet" mariow@arizona.edu < results.txt
